@@ -402,6 +402,21 @@ pub struct HyprlandWorkspacesConfig {
     #[serde(rename = "app-icon-map")]
     #[default(BTreeMap::new())]
     pub app_icon_map: ConfigProperty<BTreeMap<String, String>>,
+
+    /// Allow clicking a workspace button to switch to it.
+    ///
+    /// When false, clicking a workspace button has no effect. Useful if you
+    /// only want workspace indicators without navigation.
+    #[serde(rename = "click-to-switch")]
+    #[default(true)]
+    pub click_to_switch: ConfigProperty<bool>,
+    
+    /// Allow scrolling over the workspaces module to switch workspaces.
+    ///
+    /// When false, scroll events are ignored.
+    #[serde(rename = "scroll-to-switch")]
+    #[default(true)]
+    pub scroll_to_switch: ConfigProperty<bool>,
 }
 
 impl ModuleInfoProvider for HyprlandWorkspacesConfig {

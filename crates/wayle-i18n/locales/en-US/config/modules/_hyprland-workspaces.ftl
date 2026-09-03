@@ -83,6 +83,12 @@ settings-modules-hyprland-workspaces-app-icon-map = App Icon Map
 settings-modules-hyprland-workspaces-urgent-mode = Urgent Mode
     .description = How urgent workspaces are highlighted (per-workspace or per-application)
 
+settings-modules-hyprland-workspaces-click-to-switch = Click to switch
+    .description = Allow clicking a workspace button to switch to it.
+    
+settings-modules-hyprland-workspaces-scroll-to-switch = Scroll to switch
+    .description = Allow scrolling over the workspaces module to switch workspaces.
+
 
 ## DisplayMode variants
 enum-display-mode-label = Label

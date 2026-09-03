@@ -142,15 +142,24 @@ impl Component for HyprlandWorkspaces {
     }
 
     fn update(&mut self, msg: Self::Input, _sender: ComponentSender<Self>, _root: &Self::Root) {
+        let config = self.config.config();
+        let workspaces_config = &config.modules.hyprland_workspaces;
+    
         match msg {
             WorkspacesMsg::WorkspaceClicked(id) => {
-                self.switch_to_workspace(id);
+                if workspaces_config.click_to_switch.get() {
+                    self.switch_to_workspace(id);
+                }
             }
             WorkspacesMsg::ScrollUp => {
-                self.navigate_workspace(-1);
+                if workspaces_config.scroll_to_switch.get() {
+                    self.navigate_workspace(-1);
+                }
             }
             WorkspacesMsg::ScrollDown => {
-                self.navigate_workspace(1);
+                if workspaces_config.scroll_to_switch.get() {
+                    self.navigate_workspace(1);
+                }
             }
         }
     }
