@@ -39,7 +39,6 @@ tracing-subscriber.workspace = true
 wayle-audio.workspace = true
 wayle-battery.workspace = true
 wayle-bluetooth.workspace = true
-wayle-cava.workspace = true
 # Common dependencies
 wayle-core = { workspace = true, features = ["schema"] }
 wayle-ipc.workspace = true
