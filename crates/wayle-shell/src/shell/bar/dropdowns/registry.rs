@@ -122,6 +122,37 @@ impl DropdownInstance {
         self.freeze_and_show(bar_button, style);
     }
 
+    /// Toggles popover visibility anchored to an arbitrary widget.
+    ///
+    /// Unlike `toggle_for`, this does not freeze/thaw a `BarButton` or lock
+    /// parent size.
+    fn toggle_for_widget(&self, widget: &impl IsA<gtk::Widget>, style: DropdownStyle) {
+        let widget_ref = widget.upcast_ref::<gtk::Widget>();
+        let same_parent = self.popover.parent().as_ref() == Some(widget_ref);
+
+        if self.popover.is_visible() && same_parent {
+            self.popover.popdown();
+            return;
+        }
+
+        self.ensure_parent(widget_ref);
+        self.show_for_widget(style);
+    }
+
+    fn show_for_widget(&self, style: DropdownStyle) {
+        self.apply_position();
+        self.apply_margins(style.margins);
+        self.apply_style(&style);
+        set_bar_keyboard_mode(&self.popover, KeyboardMode::OnDemand);
+        debug!(
+            classes = ?self.popover.css_classes(),
+            autohide = self.popover.is_autohide(),
+            parent_size = ?self.popover.parent().map(|p| (p.width(), p.height())),
+            "popup (widget path)"
+        );
+        self.popover.popup();
+    }
+
     fn reparent_and_show(&self, bar_button: &Controller<BarButton>, style: DropdownStyle) {
         if let Some(sender) = self.thaw_target.take() {
             sender.emit(BarButtonInput::ThawSize);
@@ -379,6 +410,17 @@ pub(crate) fn dispatch_click(
 ) {
     dispatch_action(action, registry, |dropdown, style| {
         dropdown.toggle_for(bar_button, style);
+    });
+}
+
+/// Dispatches a click action anchored to an arbitrary widget instead of a `BarButton`.
+pub(crate) fn dispatch_click_widget(
+    action: &ClickAction,
+    registry: &DropdownRegistry,
+    widget: &impl IsA<gtk::Widget>,
+) {
+    dispatch_action(action, registry, |dropdown, style| {
+        dropdown.toggle_for_widget(widget, style);
     });
 }
 

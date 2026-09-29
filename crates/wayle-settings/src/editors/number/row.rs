@@ -14,6 +14,9 @@ use crate::{
     row::RowBehavior,
 };
 
+/// Largest `u64` that round-trips through `f64` without precision loss (2^53).
+const U64_SPIN_MAX: f64 = 9_007_199_254_740_992.0;
+
 /// Row with a numeric spin bound to a `Spacing` property, stepping in 0.5 pixel increments up to 500.
 pub(crate) fn spacing(property: &ConfigProperty<Spacing>) -> SettingRowInit {
     let controller = NumberControl::builder()
@@ -104,6 +107,73 @@ pub(crate) fn number_u32(property: &ConfigProperty<u32>) -> SettingRowInit {
     SettingRowInit {
         i18n_key: property.i18n_key(),
         handle: PropertyHandle::new(property, |value| value.to_string()),
+        control: widget.upcast(),
+        keepalive: Box::new(controller),
+        full_width: false,
+        dirty_badge: None,
+        behavior: RowBehavior::Setting,
+        unit: None,
+    }
+}
+
+/// Row with an integer spin for a `u64` property, capped at 2^53 (f64 integer precision limit).
+pub(crate) fn number_u64(property: &ConfigProperty<u64>) -> SettingRowInit {
+    let controller = NumberControl::builder()
+        .launch(NumberInit {
+            property: property.clone(),
+            range_min: 0.0,
+            range_max: U64_SPIN_MAX,
+            step: 1.0,
+            digits: 0,
+            to_f64: |value| *value as f64,
+            from_f64: |value| {
+                if !value.is_finite() {
+                    return 0;
+                }
+                value.round().clamp(0.0, U64_SPIN_MAX) as u64
+            },
+        })
+        .detach();
+
+    let widget = controller.widget().clone();
+
+    SettingRowInit {
+        i18n_key: property.i18n_key(),
+        handle: PropertyHandle::new(property, |value| value.to_string()),
+        control: widget.upcast(),
+        keepalive: Box::new(controller),
+        full_width: false,
+        dirty_badge: None,
+        behavior: RowBehavior::Setting,
+        unit: None,
+    }
+}
+
+/// Row with a numeric spin for an `f64` property, using caller-supplied range, step, and decimal digits.
+pub(crate) fn number_f64(
+    property: &ConfigProperty<f64>,
+    range_min: f64,
+    range_max: f64,
+    step: f64,
+    digits: u32,
+) -> SettingRowInit {
+    let controller = NumberControl::builder()
+        .launch(NumberInit {
+            property: property.clone(),
+            range_min,
+            range_max,
+            step,
+            digits,
+            to_f64: |value| *value,
+            from_f64: |value| if value.is_finite() { value } else { 0.0 },
+        })
+        .detach();
+
+    let widget = controller.widget().clone();
+
+    SettingRowInit {
+        i18n_key: property.i18n_key(),
+        handle: PropertyHandle::new(property, |value| format!("{value:.2}")),
         control: widget.upcast(),
         keepalive: Box::new(controller),
         full_width: false,
