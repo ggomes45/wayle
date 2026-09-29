@@ -178,8 +178,6 @@ async fn init_core_services(
     timer: &StartupTimer,
     config: &wayle_config::Config,
 ) -> Result<CoreServices, Box<dyn Error>> {
-    let modules = &config.modules;
-
     let theming_monitor = config.styling.theming_monitor.get();
     let theming_monitor = if theming_monitor.is_empty() {
         None

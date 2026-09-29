@@ -40,8 +40,3 @@ macro_rules! t {
 
 pub(crate) use t;
 
-macro_rules! td {
-    ($message_id:expr) => {{ $crate::i18n::loader().get($message_id) }};
-}
-
-pub(crate) use td;

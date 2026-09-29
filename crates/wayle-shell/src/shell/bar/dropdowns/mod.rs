@@ -9,7 +9,7 @@ mod notification;
 mod registry;
 
 pub(crate) use self::registry::{
-    DropdownFactory, DropdownInstance, DropdownRegistry, dispatch_click, dispatch_click_widget,
+    DropdownFactory, DropdownInstance, DropdownRegistry, dispatch_click,
     require_service,
 };
 use crate::shell::services::ShellServices;

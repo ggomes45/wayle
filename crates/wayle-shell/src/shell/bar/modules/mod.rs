@@ -1,6 +1,7 @@
 mod battery;
 mod brightness;
 mod clock;
+mod compositor;
 mod custom;
 mod dashboard;
 mod hyprland_workspaces;

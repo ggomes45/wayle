@@ -9,7 +9,7 @@
 //! - `{{ name | upper }}`, `| lower`, `| trim` for string transforms
 
 use minijinja::Error;
-pub use minijinja::{Environment, Error as TemplateError, ErrorKind, Value};
+pub use minijinja::Environment;
 
 /// Renders a template string with the given context value.
 ///
