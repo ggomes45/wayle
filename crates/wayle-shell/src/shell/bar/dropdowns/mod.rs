@@ -1,6 +1,5 @@
 mod audio;
 mod battery;
-mod bluetooth;
 mod brightness;
 mod calendar;
 mod dashboard;
@@ -8,7 +7,6 @@ mod media;
 mod network;
 mod notification;
 mod registry;
-mod weather;
 
 pub(crate) use self::registry::{
     DropdownFactory, DropdownInstance, DropdownRegistry, dispatch_click, dispatch_click_widget,
@@ -42,12 +40,10 @@ macro_rules! register_dropdowns {
 register_dropdowns! {
     "audio" => audio::Factory,
     "battery" => battery::Factory,
-    "bluetooth" => bluetooth::Factory,
     "brightness" => brightness::Factory,
     "calendar" => calendar::Factory,
     "dashboard" => dashboard::Factory,
     "media" => media::Factory,
     "network" => network::Factory,
     "notification" => notification::Factory,
-    "weather" => weather::Factory,
 }

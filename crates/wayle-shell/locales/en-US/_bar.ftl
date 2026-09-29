@@ -12,31 +12,6 @@ bar-network-offline = Offline
 ## Battery
 bar-battery-unavailable = N/A
 
-## Bluetooth
-bar-bluetooth-disabled = Off
-bar-bluetooth-disconnected = Disconnected
-bar-bluetooth-connected-count = { $count ->
-    [one] { $count } Connected
-   *[other] { $count } Connected
-}
-
-## Window Title
-bar-window-title-empty = Desktop
-
-## Idle Inhibit
-bar-idle-inhibit-on = On
-bar-idle-inhibit-off = Off
-
-## Keybind Mode
-bar-keybind-mode-default = default
-
-## Hyprsunset
-bar-hyprsunset-on = On
-bar-hyprsunset-off = Off
-
-## Storage
-bar-storage-multiple = Multiple
-
 ## Media
 bar-media-playing = Playing
 bar-media-paused = Paused

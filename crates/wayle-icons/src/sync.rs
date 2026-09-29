@@ -285,7 +285,7 @@ mod tests {
         let toml_text = r#"
             [modules.notification]
             icon-name = "ld-bell-symbolic"
-            [modules.power]
+            [modules.battery]
             icon-name = "ld-power-symbolic"
         "#;
         let icons = extract_referenced_icons(&toml::from_str(toml_text)?);

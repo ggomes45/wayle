@@ -1,13 +1,12 @@
 //! Application bootstrap: service initialization and instance detection.
 
 mod wallpaper;
-mod weather;
 
 use std::{
     error::Error,
     fmt::Display,
     sync::Arc,
-    time::{Duration, Instant},
+    time::Instant,
 };
 
 use tokio::task::JoinHandle;
@@ -127,11 +126,8 @@ pub async fn init_services() -> Result<(StartupTimer, ShellServices), Box<dyn Er
     let bluetooth: DeferredService<BluetoothService> = DeferredService::new(None);
     let power_profiles: DeferredService<PowerProfilesService> = DeferredService::new(None);
 
-    let (weather, core, daemons, optional) = {
+    let (core, daemons, optional) = {
         let config = config_service.config();
-        let weather = timer.time_sync("Weather", || {
-            weather::build_weather_service(&config.modules)
-        });
 
         let (core, daemons, optional) = tokio::join!(
             init_core_services(&timer, config),
@@ -139,7 +135,7 @@ pub async fn init_services() -> Result<(StartupTimer, ShellServices), Box<dyn Er
             init_optional_services(&timer),
         );
 
-        (weather, core?, daemons, optional)
+        (core?, daemons, optional)
     };
 
     spawn_deferred_bluetooth(bluetooth.clone());
@@ -172,7 +168,6 @@ pub async fn init_services() -> Result<(StartupTimer, ShellServices), Box<dyn Er
         sysinfo: core.sysinfo,
         systray: daemons.systray,
         wallpaper: core.wallpaper,
-        weather,
         shell_ipc,
     };
 
@@ -194,19 +189,8 @@ async fn init_core_services(
     let color_extractor = build_extractor_config(&config.styling);
 
     let sysinfo = Arc::new(timer.time_sync("Sysinfo", || {
-        SysinfoService::builder()
-            .cpu_interval(Duration::from_millis(modules.cpu.poll_interval_ms.get()))
-            .memory_interval(Duration::from_millis(modules.ram.poll_interval_ms.get()))
-            .disk_interval(Duration::from_millis(
-                modules.storage.poll_interval_ms.get(),
-            ))
-            .network_interval(Duration::from_millis(
-                modules.netstat.poll_interval_ms.get(),
-            ))
-            .build()
+        SysinfoService::builder().build()
     }));
-
-    let startup_duration = modules.idle_inhibit.startup_duration.get();
 
     let battery_task = tokio::spawn(BatteryService::new());
     let brightness_task = tokio::spawn(BrightnessService::new());
@@ -215,7 +199,7 @@ async fn init_core_services(
     let wallpaper_task = tokio::spawn(async move {
         wallpaper::build_wallpaper_service(&wallpaper_cfg, theming_monitor, color_extractor).await
     });
-    let idle_inhibit_task = tokio::spawn(IdleInhibitService::new(startup_duration));
+    let idle_inhibit_task = tokio::spawn(IdleInhibitService::new(60));
 
     let (battery, brightness, network, wallpaper, idle_inhibit) = tokio::join!(
         async { try_service!(timer, "Battery", spawned(battery_task)) },

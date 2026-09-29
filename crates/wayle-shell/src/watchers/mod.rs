@@ -5,9 +5,7 @@ mod monitors;
 mod notification;
 mod osd;
 mod scss_dev;
-mod sysinfo;
 mod wallpaper;
-mod weather;
 
 use std::env;
 
@@ -24,10 +22,8 @@ pub(crate) fn init(sender: &ComponentSender<Shell>, services: &ShellServices) {
     osd::spawn(sender, services);
     color_extractor::spawn(services);
     notification::spawn(services);
-    sysinfo::spawn(services);
     user_style::spawn(sender, services.config.clone(), ShellCmd::CssRecompiled);
     wallpaper::spawn(services);
-    weather::spawn(services);
 
     if env::var("WAYLE_DEV").is_ok_and(|value| value == "1") {
         scss_dev::spawn(sender, services);

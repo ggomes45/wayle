@@ -30,34 +30,19 @@ Modules appear inside `[[bar.layout]]` arrays. Each row links to the full refere
 | Module | Purpose |
 |---|---|
 | [`battery`](/config/modules/battery) | Battery level, charging state, and a dropdown with power-profile controls. |
-| [`bluetooth`](/config/modules/bluetooth) | Bluetooth connection status with a dropdown for pairing and managing devices. |
 | [`brightness`](/config/modules/brightness) | Backlight control bar module. |
-| [`cava`](/config/modules/cava) | Audio frequency bars visualising the output stream. |
 | [`clock`](/config/modules/clock) | Time display with a calendar dropdown. |
-| [`cpu`](/config/modules/cpu) | CPU usage, frequency, and temperature. |
 | [`custom`](/config/modules/custom) | User-defined module that runs a shell command and renders the output in the bar. |
 | [`dashboard`](/config/modules/dashboard) | Quick-access button with a distro icon; opens the dashboard dropdown. |
 | [`hyprland-workspaces`](/config/modules/hyprland-workspaces) | Hyprland workspace indicators with click-to-switch. |
-| [`hyprsunset`](/config/modules/hyprsunset) | Toggle for Hyprland's blue-light filter. |
-| [`idle-inhibit`](/config/modules/idle-inhibit) | Toggle that prevents screen dim, lock, and suspend while active. |
-| [`keybind-mode`](/config/modules/keybind-mode) | Current keybind-mode indicator for modal compositors. |
 | [`keyboard-input`](/config/modules/keyboard-input) | Active keyboard layout indicator. |
-| [`mango-workspaces`](/config/modules/mango-workspaces) | MangoWM tag switcher module configuration. |
 | [`media`](/config/modules/media) | Now-playing title and playback controls for the active MPRIS player. |
 | [`microphone`](/config/modules/microphone) | Microphone input level and mute toggle. |
-| [`netstat`](/config/modules/netstat) | Network traffic counters (up/down rates). |
 | [`network`](/config/modules/network) | Network connection status with a dropdown for switching connections. |
-| [`niri-workspaces`](/config/modules/niri-workspaces) | Niri workspace indicators with click-to-switch. |
 | [`notifications`](/config/modules/notifications) | Notification center: icon in the bar, dropdown with history, DND toggle. |
-| [`power`](/config/modules/power) | Shutdown, reboot, and logout menu. |
-| [`ram`](/config/modules/ram) | Memory and swap usage. |
 | [`separator`](/config/modules/separator) | A vertical rule between bar modules. |
-| [`storage`](/config/modules/storage) | Disk usage for a mount point. |
 | [`systray`](/config/modules/systray) | System tray icons via the StatusNotifierItem protocol. |
 | [`volume`](/config/modules/volume) | Output volume control with a dropdown for device and app volumes. |
-| [`weather`](/config/modules/weather) | Current conditions with hourly and daily forecasts in a dropdown. |
-| [`window-title`](/config/modules/window-title) | Active window title with optional app-icon prefix. |
-| [`world-clock`](/config/modules/world-clock) | Multiple timezones shown together in a dropdown. |
 
 ## Shared types
 

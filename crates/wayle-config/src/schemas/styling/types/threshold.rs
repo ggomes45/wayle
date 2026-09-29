@@ -17,12 +17,12 @@ use super::color::ColorValue;
 /// ## TOML Example
 ///
 /// ```toml
-/// [[modules.cpu.thresholds]]
+/// [[modules.battery.thresholds]]
 /// above = 70
 /// icon-color = "status-warning"
 /// label-color = "status-warning"
 ///
-/// [[modules.cpu.thresholds]]
+/// [[modules.battery.thresholds]]
 /// above = 90
 /// icon-color = "status-error"
 /// label-color = "status-error"

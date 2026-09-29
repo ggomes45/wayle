@@ -4541,7 +4541,6 @@ dependencies = [
  "wayle-audio",
  "wayle-battery",
  "wayle-bluetooth",
- "wayle-cava",
  "wayle-config",
  "wayle-core",
  "wayle-hyprland",
@@ -4636,25 +4635,6 @@ dependencies = [
  "wayle-core",
  "wayle-traits",
  "zbus",
-]
-
-[[package]]
-name = "wayle-cava"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "047afe21a11ebaad6e3de43af2a5bc7e46d2ce2cb05bdf17e576f5d204bc21c5"
-dependencies = [
- "bindgen",
- "cc",
- "derive_more",
- "libc",
- "pkg-config",
- "thiserror 2.0.18",
- "tokio",
- "tokio-util",
- "tracing",
- "wayle-core",
- "wayle-traits",
 ]
 
 [[package]]
@@ -4962,7 +4942,6 @@ dependencies = [
  "wayle-battery",
  "wayle-bluetooth",
  "wayle-brightness",
- "wayle-cava",
  "wayle-config",
  "wayle-core",
  "wayle-hyprland",
@@ -4979,7 +4958,6 @@ dependencies = [
  "wayle-sysinfo",
  "wayle-systray",
  "wayle-wallpaper",
- "wayle-weather",
  "wayle-widgets",
  "wildcard",
  "zbus",
@@ -5068,26 +5046,6 @@ dependencies = [
  "wayle-core",
  "wayle-traits",
  "zbus",
-]
-
-[[package]]
-name = "wayle-weather"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5aad4c55e7d8d5000ca1774194c34b1bc7f3b96aa2df506a38a789af646f13b4"
-dependencies = [
- "async-trait",
- "chrono",
- "reqwest",
- "serde",
- "serde_json",
- "thiserror 2.0.18",
- "tokio",
- "tokio-stream",
- "tokio-util",
- "tracing",
- "wayle-core",
- "wayle-traits",
 ]
 
 [[package]]

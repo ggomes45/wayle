@@ -84,7 +84,7 @@ right = [{ name = "status", modules = ["battery", "network", "volume"] }]
 monitor = "DP-2"
 left = [{ name = "clocks", modules = [
   { module = "clock", class = "local" },
-  { module = "world-clock", class = "remote" }
+  { module = "clock", class = "remote" }
 ]}]
 ```
 
@@ -118,7 +118,7 @@ left = [{ name = "status", modules = ["battery", "network"] }]
 monitor = "DP-3"
 left = [{ name = "clocks", modules = [
   { module = "clock", class = "local" },
-  { module = "world-clock", class = "remote" }
+  { module = "clock", class = "remote" }
 ]}]
 
 # Inherit from another layout
@@ -152,7 +152,7 @@ show = false
 
 Bar module name. Built-in modules or custom modules with a `custom-<id>` pattern.
 
-One of: `"battery"`, `"bluetooth"`, `"brightness"`, `"cava"`, `"clock"`, `"cpu"`, `"dashboard"`, `"hyprland-workspaces"`, `"hyprsunset"`, `"idle-inhibit"`, `"keybind-mode"`, `"keyboard-input"`, `"media"`, `"mango-workspaces"`, `"microphone"`, `"netstat"`, `"network"`, `"niri-workspaces"`, `"notifications"`, `"power"`, `"ram"`, `"separator"`, `"storage"`, `"systray"`, `"updates"`, `"volume"`, `"weather"`, `"window-title"`, `"world-clock"`.
+One of: `"battery"`, `"brightness"`, `"clock"`, `"dashboard"`, `"hyprland-workspaces"`, `"keyboard-input"`, `"media"`, `"microphone"`, `"network"`, `"notifications"`, `"separator"`, `"systray"`, `"volume"`.
 
 String matching `^custom-[a-z0-9-]+$`.
 
@@ -168,43 +168,6 @@ Border placement for bar buttons.
 | `"left"` | Border on left edge only. |
 | `"right"` | Border on right edge only. |
 | `"all"` | Border on all edges. |
-
-## CavaDirection {#cava-direction}
-
-Bar growth direction relative to the bar's attached screen edge.
-
-| Value | Meaning |
-|---|---|
-| `"normal"` | Bars grow away from the attached edge. |
-| `"reverse"` | Bars grow toward the attached edge. |
-| `"mirror"` | Bars grow symmetrically from center. |
-
-## CavaInput {#cava-input}
-
-Audio capture backend.
-
-| Value | Meaning |
-|---|---|
-| `"pipe-wire"` | PipeWire multimedia server. |
-| `"pulse"` | PulseAudio sound server. |
-| `"alsa"` | Advanced Linux Sound Architecture. |
-| `"jack"` | JACK Audio Connection Kit. |
-| `"fifo"` | Named pipe (FIFO) input. |
-| `"port-audio"` | PortAudio cross-platform library. |
-| `"sndio"` | sndio audio subsystem (BSD). |
-| `"oss"` | Open Sound System (legacy). |
-| `"shmem"` | Shared memory input. |
-| `"winscap"` | Windows audio capture (WASAPI). |
-
-## CavaStyle {#cava-style}
-
-Visualization rendering style.
-
-| Value | Meaning |
-|---|---|
-| `"bars"` | Rectangular frequency bars. |
-| `"wave"` | Smooth curve connecting bar peaks. |
-| `"peaks"` | Bars with floating peak indicators that decay over time. |
 
 ## ClassedModule {#classed-module}
 
@@ -330,25 +293,6 @@ Uses the existing `--weight-*` tokens defined in SCSS.
 | `"medium"` | Medium weight (--weight-medium: 500). |
 | `"semibold"` | Semi-bold weight (--weight-semibold: 600). |
 | `"bold"` | Bold weight (--weight-bold: 700). |
-
-## Framerate {#framerate}
-
-Visualization framerate clamped to 1-360 fps (mirrors `wayle_cava::Framerate`).
-
-Number in `[1, 360]`.
-
-Serialises as `uint32`.
-
-## FrequencyHz {#frequency-hz}
-
-Frequency value in Hz, minimum 1 Hz.
-
-Cross-field constraints (high_cutoff > low_cutoff, samplerate/2 > high_cutoff)
-are validated at the service builder.
-
-Number `>= 1`.
-
-Serialises as `uint32`.
 
 ## HexColor {#hex-color}
 
@@ -636,23 +580,6 @@ Order in which popups are stacked on screen.
 | `"newest-first"` | Newest notifications appear closest to the configured position. |
 | `"oldest-first"` | Oldest notifications appear closest to the configured position. |
 
-## StorageMountPoint {#storage-mount-point}
-
-Storage mount targets accepted by `mount-point`.
-
-Supports a single string for backwards compatibility or an array of paths.
-
-String.
-
-## TemperatureUnit {#temperature-unit}
-
-Temperature unit for display.
-
-| Value | Meaning |
-|---|---|
-| `"metric"` | Celsius (metric). |
-| `"imperial"` | Fahrenheit (imperial). |
-
 ## ThemeProvider {#theme-provider}
 
 Source of color palette values.
@@ -676,12 +603,12 @@ both conditions must be satisfied (AND logic).
 ### TOML Example
 
 ```toml
-[[modules.cpu.thresholds]]
+[[modules.battery.thresholds]]
 above = 70
 icon-color = "status-warning"
 label-color = "status-warning"
 
-[[modules.cpu.thresholds]]
+[[modules.battery.thresholds]]
 above = 90
 icon-color = "status-error"
 label-color = "status-error"
@@ -831,22 +758,6 @@ Wallust palette mode.
 | `"softlightcomp16"` | Soft light complementary with 16-color trick. |
 | `"ansidark"` | ANSI-ordered dark palette for LS_COLORS. |
 | `"ansidark16"` | ANSI dark with 16-color trick. |
-
-## WeatherProvider {#weather-provider}
-
-Weather data provider selection.
-
-| Value | Meaning |
-|---|---|
-| `"open-meteo"` | Open-Meteo (no API key required). |
-| `"visual-crossing"` | Visual Crossing (requires API key). |
-| `"weather-api"` | WeatherAPI.com (requires API key). |
-
-## WorkspaceClickAction {#workspace-click-action}
-
-Click/scroll action: focus:this | focus:next | focus:previous | focus:last | dropdown:NAME | shell command | empty for none
-
-String.
 
 ## WorkspaceMap {#workspace-map}
 

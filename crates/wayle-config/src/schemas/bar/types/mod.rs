@@ -35,7 +35,7 @@ use wayle_derive::wayle_enum;
 /// monitor = "DP-3"
 /// left = [{ name = "clocks", modules = [
 ///   { module = "clock", class = "local" },
-///   { module = "world-clock", class = "remote" }
+///   { module = "clock", class = "remote" }
 /// ]}]
 ///
 /// # Inherit from another layout
@@ -83,7 +83,6 @@ impl Default for BarLayout {
             center: vec![BarItem::Module(ModuleRef::Plain(BarModule::Clock))],
             right: vec![
                 BarItem::Module(ModuleRef::Plain(BarModule::Battery)),
-                BarItem::Module(ModuleRef::Plain(BarModule::Bluetooth)),
                 BarItem::Module(ModuleRef::Plain(BarModule::Network)),
                 BarItem::Module(ModuleRef::Plain(BarModule::Microphone)),
                 BarItem::Module(ModuleRef::Plain(BarModule::Volume)),
@@ -120,7 +119,7 @@ impl Default for BarLayout {
 /// monitor = "DP-2"
 /// left = [{ name = "clocks", modules = [
 ///   { module = "clock", class = "local" },
-///   { module = "world-clock", class = "remote" }
+///   { module = "clock", class = "remote" }
 /// ]}]
 /// ```
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
@@ -197,26 +196,14 @@ pub struct ClassedModule {
 pub enum BarModule {
     /// Battery status and percentage.
     Battery,
-    /// Bluetooth connection status and devices.
-    Bluetooth,
     /// Backlight brightness control.
     Brightness,
-    /// Audio frequency visualizer.
-    Cava,
     /// Current time display.
     Clock,
-    /// CPU usage indicator.
-    Cpu,
     /// Quick access dashboard button.
     Dashboard,
-    /// Compositor keybind mode indicator (submaps in Hyprland, modes in Sway/River).
-    KeybindMode,
     /// Hyprland workspace switcher.
     HyprlandWorkspaces,
-    /// Idle inhibitor to prevent screen timeout.
-    IdleInhibit,
-    /// Hyprsunset (night light) toggle.
-    Hyprsunset,
     /// Keyboard layout indicator.
     KeyboardInput,
     /// Media player controls.
@@ -225,34 +212,14 @@ pub enum BarModule {
     Microphone,
     /// Network connection status.
     Network,
-    /// Network traffic statistics.
-    Netstat,
-    /// Niri workspace switcher.
-    NiriWorkspaces,
-    /// MangoWM tag switcher.
-    MangoWorkspaces,
     /// Notification center button.
     Notifications,
-    /// Power menu button.
-    Power,
-    /// RAM usage indicator.
-    Ram,
     /// Visual separator between modules.
     Separator,
-    /// Storage usage indicator.
-    Storage,
     /// System tray icons.
     Systray,
-    /// System updates indicator.
-    Updates,
     /// Volume control.
     Volume,
-    /// Weather conditions display.
-    Weather,
-    /// Active window title.
-    WindowTitle,
-    /// World clock with multiple timezones.
-    WorldClock,
     /// User-defined custom module by ID.
     Custom(String),
 }
@@ -288,34 +255,18 @@ impl BarModule {
     fn to_kebab_case(&self) -> &'static str {
         match self {
             Self::Battery => "battery",
-            Self::Bluetooth => "bluetooth",
             Self::Brightness => "brightness",
-            Self::Cava => "cava",
             Self::Clock => "clock",
-            Self::Cpu => "cpu",
             Self::Dashboard => "dashboard",
-            Self::KeybindMode => "keybind-mode",
             Self::HyprlandWorkspaces => "hyprland-workspaces",
-            Self::IdleInhibit => "idle-inhibit",
-            Self::Hyprsunset => "hyprsunset",
             Self::KeyboardInput => "keyboard-input",
             Self::Media => "media",
             Self::Microphone => "microphone",
             Self::Network => "network",
-            Self::Netstat => "netstat",
-            Self::NiriWorkspaces => "niri-workspaces",
-            Self::MangoWorkspaces => "mango-workspaces",
             Self::Notifications => "notifications",
-            Self::Power => "power",
-            Self::Ram => "ram",
             Self::Separator => "separator",
-            Self::Storage => "storage",
             Self::Systray => "systray",
-            Self::Updates => "updates",
             Self::Volume => "volume",
-            Self::Weather => "weather",
-            Self::WindowTitle => "window-title",
-            Self::WorldClock => "world-clock",
             Self::Custom(_) => unreachable!("Custom modules use dynamic serialization"),
         }
     }
@@ -323,34 +274,18 @@ impl BarModule {
     fn from_kebab_case(s: &str) -> Option<Self> {
         let module = match s {
             "battery" => Self::Battery,
-            "bluetooth" => Self::Bluetooth,
             "brightness" => Self::Brightness,
-            "cava" => Self::Cava,
             "clock" => Self::Clock,
-            "cpu" => Self::Cpu,
             "dashboard" => Self::Dashboard,
-            "keybind-mode" => Self::KeybindMode,
             "hyprland-workspaces" => Self::HyprlandWorkspaces,
-            "idle-inhibit" => Self::IdleInhibit,
-            "hyprsunset" => Self::Hyprsunset,
             "keyboard-input" => Self::KeyboardInput,
             "media" => Self::Media,
             "microphone" => Self::Microphone,
             "network" => Self::Network,
-            "netstat" => Self::Netstat,
-            "niri-workspaces" => Self::NiriWorkspaces,
-            "mango-workspaces" => Self::MangoWorkspaces,
             "notifications" => Self::Notifications,
-            "power" => Self::Power,
-            "ram" => Self::Ram,
             "separator" => Self::Separator,
-            "storage" => Self::Storage,
             "systray" => Self::Systray,
-            "updates" => Self::Updates,
             "volume" => Self::Volume,
-            "weather" => Self::Weather,
-            "window-title" => Self::WindowTitle,
-            "world-clock" => Self::WorldClock,
             _ => return None,
         };
         Some(module)
@@ -409,34 +344,18 @@ impl fmt::Display for BarModule {
 
 const BUILTIN_MODULES: &[&str] = &[
     "battery",
-    "bluetooth",
     "brightness",
-    "cava",
     "clock",
-    "cpu",
     "dashboard",
     "hyprland-workspaces",
-    "hyprsunset",
-    "idle-inhibit",
-    "keybind-mode",
     "keyboard-input",
     "media",
-    "mango-workspaces",
     "microphone",
-    "netstat",
     "network",
-    "niri-workspaces",
     "notifications",
-    "power",
-    "ram",
     "separator",
-    "storage",
     "systray",
-    "updates",
     "volume",
-    "weather",
-    "window-title",
-    "world-clock",
 ];
 
 /// Bar position on screen.

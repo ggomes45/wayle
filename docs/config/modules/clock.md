@@ -67,7 +67,7 @@ right = ["clock"]
 | Field | Type | Default | Description |
 |---|---|---|---|
 | `left-click` | [`ClickAction`](/config/types#click-action) | `"dropdown:calendar"` | Action on left click. |
-| `right-click` | [`ClickAction`](/config/types#click-action) | `"dropdown:weather"` | Action on right click. |
+| `right-click` | [`ClickAction`](/config/types#click-action) | `"dropdown:calendar"` | Action on right click. |
 | `middle-click` | [`ClickAction`](/config/types#click-action) | `""` | Action on middle click. |
 | `scroll-up` | [`ClickAction`](/config/types#click-action) | `""` | Action on scroll up. |
 | `scroll-down` | [`ClickAction`](/config/types#click-action) | `""` | Action on scroll down. |
@@ -94,7 +94,7 @@ label-color = "accent"
 label-max-length = 0
 button-bg-color = "bg-surface-elevated"
 left-click = "dropdown:calendar"
-right-click = "dropdown:weather"
+right-click = "dropdown:calendar"
 middle-click = ""
 scroll-up = ""
 scroll-down = ""

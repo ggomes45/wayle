@@ -6,20 +6,6 @@
 //!
 //! # Usage
 //!
-//! Create `~/.config/wayle/.env` (or `.secrets.env`, `.api.env`, etc.):
-//!
-//! ```text
-//! WEATHER_API_KEY=your-api-key-here
-//! ```
-//!
-//! Then reference it in `config.toml`:
-//!
-//! ```toml
-//! [modules.weather]
-//! provider = "visual-crossing"
-//! visual-crossing-key = "$WEATHER_API_KEY"
-//! ```
-//!
 //! When the `.env` file changes, the value is automatically re-resolved.
 
 use std::path::{Path, PathBuf};

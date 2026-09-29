@@ -3,7 +3,7 @@
 use wayle_config::{
     ClickAction,
     schemas::{
-        modules::{PopupMonitor, StorageMountPoint, WorkspaceClickAction},
+        modules::PopupMonitor,
         osd::OsdMonitor,
     },
 };
@@ -56,28 +56,6 @@ macro_rules! impl_monitor_text_like {
 impl_monitor_text_like!(OsdMonitor);
 impl_monitor_text_like!(PopupMonitor);
 
-impl TextLike for StorageMountPoint {
-    fn to_entry_text(&self) -> String {
-        match self {
-            Self::Single(path) => path.clone(),
-            Self::Multiple(paths) => paths.join(", "),
-        }
-    }
-
-    fn from_entry_text(text: &str) -> Self {
-        let paths: Vec<String> = text
-            .split(',')
-            .map(|s| s.trim().to_owned())
-            .filter(|s| !s.is_empty())
-            .collect();
-        match paths.len() {
-            0 => Self::Single(String::from("/")),
-            1 => Self::Single(paths.into_iter().next().unwrap_or_default()),
-            _ => Self::Multiple(paths),
-        }
-    }
-}
-
 impl TextLike for ClickAction {
     fn to_entry_text(&self) -> String {
         match self {
@@ -99,32 +77,3 @@ impl TextLike for ClickAction {
     }
 }
 
-impl TextLike for WorkspaceClickAction {
-    fn to_entry_text(&self) -> String {
-        match self {
-            Self::None => String::new(),
-            Self::FocusWorkspace => String::from("focus:this"),
-            Self::FocusNext => String::from("focus:next"),
-            Self::FocusPrevious => String::from("focus:previous"),
-            Self::FocusLast => String::from("focus:last"),
-            Self::Dropdown(name) => format!("dropdown:{name}"),
-            Self::Shell(cmd) => cmd.clone(),
-        }
-    }
-
-    fn from_entry_text(text: &str) -> Self {
-        if text.is_empty() {
-            return Self::None;
-        }
-        match text {
-            "focus:this" => Self::FocusWorkspace,
-            "focus:next" => Self::FocusNext,
-            "focus:previous" => Self::FocusPrevious,
-            "focus:last" => Self::FocusLast,
-            _ => match text.strip_prefix("dropdown:") {
-                Some(name) => Self::Dropdown(name.to_owned()),
-                None => Self::Shell(text.to_owned()),
-            },
-        }
-    }
-}
