@@ -32,19 +32,6 @@ pub fn render(template: &str, context: impl serde::Serialize) -> Result<String, 
 /// # Errors
 ///
 /// Returns error on template syntax errors or render failures.
-pub fn render_with<F>(
-    template: &str,
-    context: impl serde::Serialize,
-    configure: F,
-) -> Result<String, Error>
-where
-    F: FnOnce(&mut Environment<'_>),
-{
-    let mut env = Environment::new();
-    configure(&mut env);
-    env.render_str(template, context)
-}
-
 #[cfg(test)]
 mod tests {
     use serde_json::json;
